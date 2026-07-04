@@ -1,12 +1,12 @@
-# Recall – Personal Knowledge Retrieval Platform
+# Resurf – Personal Knowledge Retrieval Platform
 
 ## 📌 Overview
 
-Recall is a full-stack MERN application designed to solve the problem of **re-finding digital resources**, not just storing them.
+Resurf is a full-stack MERN application designed to solve the problem of **re-finding digital resources**, not just storing them.
 
 Every day, people discover useful information from different sources such as websites, PDFs, PowerPoint presentations, YouTube videos, GitHub repositories, and personal notes. Over time, these resources become scattered across multiple platforms, making them difficult to locate when they are actually needed.
 
-Recall provides a centralized workspace where users can capture, organize, search, and rediscover their resources from a single place.
+Resurf provides a centralized workspace where users can capture, organize, search, and rediscover their resources from a single place.
 
 ---
 
@@ -22,7 +22,7 @@ As a result, users often experience problems like:
 * Managing resources spread across Chrome, Downloads, Google Drive, WhatsApp, YouTube, and personal notes.
 * Spending unnecessary time searching for previously saved resources.
 
-Recall solves this problem by creating a unified platform focused on **capturing, organizing, and re-finding** digital resources.
+Resurf solves this problem by creating a unified platform focused on **capturing, organizing, and re-finding** digital resources.
 
 ---
 
@@ -50,7 +50,7 @@ Supported resource types:
 * 💻 GitHub Repositories
 * 📝 Personal Notes
 
-Instead of treating each type differently, Recall stores everything as a unified **Resource**.
+Instead of treating each type differently, Resurf stores everything as a unified **Resource**.
 
 ---
 
@@ -102,7 +102,7 @@ Files are securely stored while their metadata is maintained inside the database
 
 ## 🌐 Automatic Metadata Extraction
 
-When a user saves a website, Recall automatically extracts:
+When a user saves a website, Resurf automatically extracts:
 
 * Page Title
 * Description
@@ -244,7 +244,7 @@ server/
 
 # 🎯 Project Goal
 
-Recall is built around one simple idea:
+Resurf is built around one simple idea:
 
 > **"You don't need to remember where you saved something. You only need to remember something about it."**
 
@@ -252,9 +252,9 @@ The application focuses on helping users capture, organize, and quickly rediscov
 
 ---
 
-# 💡 Why Recall?
+# 💡 Why Resurf?
 
-Unlike traditional bookmark managers or file storage systems, Recall is designed around **retrieval** rather than **storage**.
+Unlike traditional bookmark managers or file storage systems, Resurf is designed around **retrieval** rather than **storage**.
 
 Instead of asking:
 
@@ -264,7 +264,7 @@ Users simply ask:
 
 > "What do I remember about it?"
 
-Recall then searches across all saved resources from a single interface.
+Resurf then searches across all saved resources from a single interface.
 
 ---
 
@@ -287,6 +287,6 @@ This project demonstrates:
 
 # 🌟 Vision
 
-Recall aims to become a personal knowledge retrieval platform that helps users build a searchable knowledge base over time.
+Resurf aims to become a personal knowledge retrieval platform that helps users build a searchable knowledge base over time.
 
-Rather than replacing tools like browser bookmarks or cloud storage, Recall acts as a unified layer that makes information easier to organize, search, and rediscover whenever it is needed.
+Rather than replacing tools like browser bookmarks or cloud storage, Resurf acts as a unified layer that makes information easier to organize, search, and rediscover whenever it is needed.
