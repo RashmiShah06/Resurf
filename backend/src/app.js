@@ -4,7 +4,7 @@ import cors from "cors";
 const app = express();//create an express app 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+     origin: ["http://localhost:5173", "https://resurf-pi.vercel.app"],
     credentials: true,
   })
 );
