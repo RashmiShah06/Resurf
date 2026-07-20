@@ -11,7 +11,7 @@ import { TbPin } from "react-icons/tb";
 
 
 
-const API_BASE = "/api/v1"; 
+const API_BASE = "https://resurf.onrender.com/api/v1"; 
 
 const ENDPOINTS = {
   collections: () => "/collections",
