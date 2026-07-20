@@ -11,7 +11,7 @@ function ForgotPassword() {
     const [toast, setToast] = useState(null); // { type: "success" | "error", message }
     const handleForgotPassword = async () => {
   try {
-    const res = await API.post("users/forgot-password", {email,});
+    const res = await API.post("/users/forgot-password", {email,});
 
     setToast({ type: "success", message: res.data.message });
   } 
