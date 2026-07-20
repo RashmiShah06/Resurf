@@ -14,7 +14,7 @@ function Login() {
   const navigate = useNavigate();
   const handleLogin = async () => {
   try {
-    const res = await API.post("/login", {
+    const res = await API.post("/users/login", {
       email,
       password,
     });
