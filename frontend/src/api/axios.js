@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://resurf.onrender.com/api/v1/users",
+  baseURL: "https://resurf.onrender.com/api/v1",
 });
 
 export default API;
