@@ -116,5 +116,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+
+# multer's local temp storage before files go to Cloudinary
+src/uploads/
+backend/src/uploads/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node
