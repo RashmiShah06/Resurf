@@ -15,9 +15,15 @@ const registerUser = async(req, res) => {
         }
 
         //user already exist
-        const existing = await User.findOne({email: email.toLowerCase()});
+        const existing = await User.findOne({
+            $or: [{ email: email.toLowerCase() }, { username: username.toLowerCase() }]
+        });
         if(existing){
-            return res.status(409).json({message: "User already exists"});
+            return res.status(409).json({
+                message: existing.email === email.toLowerCase()
+                    ? "User already exists"
+                    : "Username already taken"
+            });
         }
 
         //create user
@@ -26,13 +32,19 @@ const registerUser = async(req, res) => {
             email: email.toLowerCase(),
             password
         });
-
+        const accessToken = generateToken(user._id);
+ 
         res.status(201).json({
             message: "User registered succesfully",
+            accessToken,
             user: {id: user._id, email: user.email, username: user.username}
         });
     }
     catch(error){
+        if (error.code === 11000) {
+            const field = Object.keys(error.keyPattern)[0];
+            return res.status(409).json({ message: `${field} already in use` });
+        }
         res.status(500).json({message: "Server error", error: error.message});
     }
 };
