@@ -23,7 +23,7 @@ function ResetPassword() {
   }
   
   try {
-    const res = await API.post(`/reset-password/${token}`, {
+    const res = await API.post(`users/reset-password/${token}`, {
       password,
     });
 
