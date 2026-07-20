@@ -124,5 +124,5 @@ Thumbs.db
 # multer's local temp storage before files go to Cloudinary
 src/uploads/
 backend/src/uploads/
-
+frontend/package-lock.json
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node
