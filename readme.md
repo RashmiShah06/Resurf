@@ -4,9 +4,9 @@
 
 Resurf is a full-stack MERN application designed to solve the problem of **re-finding digital resources**, not just storing them.
 
-Every day, people discover useful information from different sources such as websites, PDFs, PowerPoint presentations, YouTube videos, GitHub repositories, and personal notes. Over time, these resources become scattered across multiple platforms, making them difficult to locate when they are actually needed.
+Every day, people discover useful information from different sources such as websites, PDFs, PowerPoint presentations, Word documents, YouTube videos, GitHub repositories, and personal notes. Over time, these resources become scattered across multiple platforms, making them difficult to locate when they are actually needed.
 
-Resurf provides a centralized workspace where users can capture, organize, search, and rediscover their resources from a single place.
+Resurf provides a centralized workspace where users can capture, organize, search, and rediscover their resources from a single place — and search by what a resource is *about*, not just what it's named.
 
 ---
 
@@ -17,10 +17,10 @@ Existing tools such as browser bookmarks, file explorers, cloud storage, and not
 As a result, users often experience problems like:
 
 * Forgetting where an important website was bookmarked.
-* Losing track of downloaded PDFs and PPTs.
+* Losing track of downloaded PDFs, PPTs, and Word documents.
 * Saving useful GitHub repositories but never finding them again.
 * Managing resources spread across Chrome, Downloads, Google Drive, WhatsApp, YouTube, and personal notes.
-* Spending unnecessary time searching for previously saved resources.
+* Spending unnecessary time searching for previously saved resources — especially when the *filename* is forgotten but the *content* isn't.
 
 Resurf solves this problem by creating a unified platform focused on **capturing, organizing, and re-finding** digital resources.
 
@@ -30,112 +30,76 @@ Resurf solves this problem by creating a unified platform focused on **capturing
 
 ## 🔐 Authentication
 
-* User Registration
-* Secure Login
-* JWT Authentication
-* Protected Routes
+* User registration & secure login (bcrypt-hashed passwords)
+* JWT-based authentication with protected routes
+* Email-based password reset (time-limited, hashed reset tokens)
 
 ---
 
 ## 📚 Unified Resource Management
 
-Store different kinds of learning and reference materials in one place.
+Every saved item — file or link — is stored as a single, consistent **Resource**, regardless of type.
 
-Supported resource types:
+**File uploads:**
+* Documents, presentations, spreadsheets, code files, images, videos, archives, text files
 
-* 🌐 Websites
-* 📄 PDF Documents
-* 📊 PPT / PPTX Files
-* 🎥 YouTube Videos
-* 💻 GitHub Repositories
-* 📝 Personal Notes
-
-Instead of treating each type differently, Resurf stores everything as a unified **Resource**.
+**Links:**
+* Websites, YouTube videos, GitHub repositories, ChatGPT conversations, Drive files, LinkedIn posts, LeetCode/GeeksforGeeks problems, and general links
 
 ---
 
-## 🗂️ Workspaces
+## 🗂️ Collections & Nested Topics
 
-Organize resources into custom workspaces based on your needs.
+Organize resources into custom **Collections** (e.g. *MCA*, *Placement Prep*, *MERN Development*, *AI*, *Research*), and further break each one down into **Topics** — which can nest inside other Topics for deeper hierarchy (e.g. *MCA → Networks → Routing Protocols*).
 
-Examples:
-
-* MCA
-* Placement Preparation
-* MERN Development
-* AI
-* Personal
-* Research
-* Finance
-
-Workspaces are fully customizable.
+Resources, topics, and whole collections can be:
+* **Favorited** or **Pinned** for quick access from the dashboard
+* **Renamed**, **cut/copied and moved or duplicated** between collections and topics
+* **Moved to Trash** (soft delete) and later **restored** or **permanently deleted** — deleting a collection or topic safely cascades to everything inside it
 
 ---
 
-## 🔍 Unified Search
+## 🔍 Content-Aware Search
 
-Search all saved resources from one place.
+Search isn't limited to titles and tags — Resurf looks *inside* what you saved:
 
-Users can search using:
+* **Multi-keyword matching** — "mca networks" matches a resource titled *"Networks — MCA notes"* even though the words are reversed and scattered across different fields; every keyword just has to appear somewhere, in any order.
+* **PDF content search** — text is extracted from PDFs at upload time (via `pdf-parse`) and indexed for search, so a document is findable by what's written on page 8, not just its filename.
+* **OCR fallback for scanned PDFs** — when a PDF has no real text layer (a scan or photographed pages), Resurf automatically falls back to OCR (Tesseract) on the first few pages so even scanned documents stay somewhat searchable.
+* **Word & PowerPoint content search** — `.docx` files (via `mammoth`) and `.pptx` slide text (parsed directly from the file) are also extracted and indexed.
+* **Link content search** — saving a link automatically pulls in the page's title and description (via Open Graph / meta tags), with dedicated, more reliable handling for **YouTube** (oEmbed API) and **GitHub** (repo API) links specifically.
 
-* Resource Title
-* Tags
-* Description
-* Personal Notes
-* Resource Type
-* Workspace
-
-Instead of remembering where something was saved, users only need to remember what it was about.
+All search results are scoped privately to the logged-in user.
 
 ---
 
-## 📄 File Upload
+## 📄 Reliable File Handling (Cloudinary)
 
-Upload:
-
-* PDF Documents
-* PPT / PPTX Files
-
-Files are securely stored while their metadata is maintained inside the database.
+* Files are routed to the correct Cloudinary storage type based on their actual MIME type — PDFs open inline in the browser instead of being blocked or force-downloaded, while non-renderable files (zip, code files, etc.) download normally.
+* Uploaded filenames are preserved exactly as the original — uniqueness is handled via storage path, not by mangling the visible filename.
+* A dedicated **Download** action forces a proper download (with the correct original filename) for any file resource, independent of how it opens on click.
 
 ---
 
-## 🌐 Automatic Metadata Extraction
+## ⭐ Favorites & 📌 Pinned
 
-When a user saves a website, Resurf automatically extracts:
-
-* Page Title
-* Description
-* Website Icon (Favicon)
-* URL
-
-This minimizes manual effort while saving resources.
+Two separate, always-accessible lists for quick recall — favorites for what matters most, pinned for what you're actively working with.
 
 ---
 
-## ⭐ Favorites
+## 🎨 Light & Dark Theme
 
-Mark important resources as favorites for quick access.
+A theme toggle switches the entire interface between light and dark palettes, with the choice remembered across sessions.
 
 ---
 
 ## 📱 Responsive Interface
 
-Designed to work seamlessly across:
-
-* Desktop
-* Tablet
-* Mobile
+Designed to work across desktop, tablet, and mobile screen sizes.
 
 ---
 
 # 🚀 Future Enhancements
-
-## 📄 PDF Text Indexing
-
-Extract text from uploaded PDFs to enable searching inside document contents instead of relying only on filenames.
-
----
 
 ## 🤖 AI-Powered Smart Search
 
@@ -143,41 +107,31 @@ Allow users to search naturally using queries such as:
 
 > "Find the React authentication article I saved before placements."
 
-AI interprets the query and retrieves the most relevant resources.
+An LLM interprets the query and retrieves the most relevant resources, rather than relying purely on keyword matching.
 
 ---
 
 ## 🏷️ AI Tag Generation
 
-Automatically generate meaningful tags for:
-
-* Websites
-* PDFs
-* PPTs
-
-This reduces manual organization while improving search quality.
+Automatically generate meaningful tags for uploaded files and links — reducing manual organization while improving search quality. (The `tags` field already exists on every resource; nothing currently populates it yet.)
 
 ---
 
 ## 📝 AI Summaries
 
-Generate concise summaries for lengthy:
-
-* Articles
-* PDFs
-* Documentation
-
----
-
-## 🎤 Voice Search
-
-Allow users to search their personal knowledge base using speech instead of typing.
+Generate concise summaries for lengthy articles, PDFs, and documentation.
 
 ---
 
 ## 🧠 Semantic Search
 
-Retrieve resources based on meaning instead of exact keyword matches, making it easier to find information even when users remember only partial details.
+Retrieve resources based on meaning instead of exact keyword matches — useful when a user remembers only the gist of something, not the specific words used in it.
+
+---
+
+## 🖼️ Vision-Based Tagging for Scanned/Image-Heavy PDFs
+
+For scanned PDFs where OCR yields little (e.g. diagram-heavy pages), a vision-capable model could describe and tag page content directly from images.
 
 ---
 
@@ -196,51 +150,31 @@ Retrieve resources based on meaning instead of exact keyword matches, making it 
 
 ### Database
 
-* MongoDB
+* MongoDB (Mongoose)
 
 ### Authentication
 
 * JWT
+* bcrypt
 
 ### File Storage
 
 * Cloudinary
 
+### Content Extraction
+
+* `pdf-parse` — PDF text extraction
+* `tesseract.js` + `pdf2pic` — OCR fallback for scanned PDFs *(requires GraphicsMagick/ImageMagick + Ghostscript on the server)*
+* `mammoth` — DOCX text extraction
+* `adm-zip` — PPTX slide text extraction
+* Native `fetch` — link metadata scraping, plus YouTube oEmbed & GitHub REST APIs
+
 ### Future AI Integration
 
-* Groq API / OpenAI API / Gemini API
-* AI Tag Generation
-* Natural Language Search
-* Semantic Search
+* An LLM API (e.g. Claude, GPT, Gemini) for smart/semantic search, AI tag generation, and summaries
 
 ---
 
-# 📂 Project Structure
-
-```text
-client/
-│
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── hooks/
-│   ├── services/
-│   ├── context/
-│   ├── utils/
-│   └── assets/
-│
-server/
-│
-├── controllers/
-├── middleware/
-├── models/
-├── routes/
-├── services/
-├── utils/
-└── server.js
-```
-
----
 
 # 🎯 Project Goal
 
@@ -264,7 +198,7 @@ Users simply ask:
 
 > "What do I remember about it?"
 
-Resurf then searches across all saved resources from a single interface.
+Resurf then searches across all saved resources — including what's written *inside* them — from a single interface.
 
 ---
 
@@ -275,11 +209,12 @@ This project demonstrates:
 * Full-Stack MERN Development
 * REST API Design
 * Authentication & Authorization
-* MongoDB Schema Design
-* File Upload & Cloud Storage
-* Metadata Extraction
-* Full-Text Search
-* Information Retrieval Concepts
+* MongoDB Schema Design (including recursive/nested tree structures for Topics)
+* File Upload & Cloud Storage Integration (Cloudinary)
+* Document Parsing & Text Extraction (PDF, DOCX, PPTX)
+* OCR Integration for Scanned Documents
+* Automated Web Metadata Extraction
+* Multi-Field, Multi-Keyword Search Design
 * Responsive UI Development
 * AI-assisted Search (Future)
 
