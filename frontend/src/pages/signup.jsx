@@ -22,7 +22,7 @@ function Signup() {
     }
 
     try {
-      const res = await API.post("users/register", {
+      const res = await API.post("/users/register", {
         username,
         email,
         password,
