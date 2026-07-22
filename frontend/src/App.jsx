@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/login";
@@ -8,6 +9,9 @@ import Landing from "./pages/landing";
 import Resurf from "./pages/resurf";
 
 function App() {
+  useEffect(() => {
+    API.get("/health").catch(() => {});
+  }, []);
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
