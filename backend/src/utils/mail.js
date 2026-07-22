@@ -1,12 +1,21 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: process.env.EMAIL_USER,
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+  },
+});
 
 export const sendEmail = async (to, subject, html) => {
-    await resend.emails.send({
-        from: "Resurf <onboarding@resend.dev>", // or your verified domain
-        to,
-        subject,
-        html,
-    });
+  await transporter.sendMail({
+    from: `"Resurf" <${process.env.EMAIL_USER}>`,
+    to,
+    subject,
+    html,
+  });
 };
