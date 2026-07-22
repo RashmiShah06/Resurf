@@ -1,21 +1,41 @@
-import nodemailer from "nodemailer";
+import { google } from "googleapis";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "OAuth2",
-    user: process.env.EMAIL_USER,
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-  },
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
+
+oAuth2Client.setCredentials({
+  refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
 
-export const sendEmail = async (to, subject, html) => {
-  await transporter.sendMail({
-    from: `"Resurf" <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
+const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
+
+function encodeMessage(to, subject, html) {
+  const messageParts = [
+    `From: "Resurf" <${process.env.EMAIL_USER}>`,
+    `To: ${to}`,
+    "Content-Type: text/html; charset=utf-8",
+    "MIME-Version: 1.0",
+    `Subject: ${subject}`,
+    "",
     html,
+  ];
+  const message = messageParts.join("\n");
+
+  return Buffer.from(message)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+}
+
+export const sendEmail = async (to, subject, html) => {
+  const raw = encodeMessage(to, subject, html);
+
+  await gmail.users.messages.send({
+    userId: "me",
+    requestBody: { raw },
   });
 };
