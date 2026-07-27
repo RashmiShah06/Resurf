@@ -61,7 +61,7 @@ Resurf/
 ### Setup
 
 ```bash
-git clone https://github.com/your-username/Resurf.git
+git clone https://github.com/rashmishah06/Resurf.git
 cd Resurf
 ```
 
@@ -131,7 +131,7 @@ All routes are under `/api/v1`. Authenticated routes require a `Bearer` token in
 
 ## Supported Resource Types
 
-Files: PDFs, presentations, spreadsheets, code files, images, videos, archives, text files
+Files: PDFs, presentations, spreadsheets, code files, archives, text files
 
 Links: YouTube, GitHub, ChatGPT, Google Drive, LinkedIn, LeetCode, GeeksforGeeks, and general websites
 
